@@ -5,12 +5,13 @@ import "express-async-errors";
 import helmet from "helmet";
 import morgan from "morgan";
 import xss from "xss-clean";
-import mongoose from "mongoose";
 import { connectDB } from "./db/connect";
-import kpiRoutes from "./routes/kpi";
+import kpiRoutes from "./routes/allRoutes";
+import productRoutes from "./routes/allRoutes";
 import { notFoundMiddleware, errorHandlerMiddleware } from "./middleware/";
 import KPI from "./models/KPI";
-import { kpis } from "./data/data";
+import Product from "./models/Product";
+import { kpis, products } from "./data/data";
 
 const app = express();
 const port = process.env.PORT || 9000;
@@ -25,6 +26,7 @@ app.use(cors());
 
 //routes
 app.use("/kpi", kpiRoutes);
+app.use("/product", productRoutes);
 
 // error handling
 app.use(notFoundMiddleware);
@@ -36,8 +38,14 @@ const start = async () => {
     app.listen(port, () =>
       console.log(`Server is listening on port ${port} ...`)
     );
-    //await mongoose.connection.db.dropDatabase();
-    KPI.insertMany(kpis);
+    const countKpi = await KPI.countDocuments();
+    if (countKpi === 0) {
+      await KPI.insertMany(kpis);
+    }
+    const countProduct = await Product.countDocuments();
+    if (countProduct === 0) {
+      await Product.insertMany(products);
+    }
   } catch (error) {
     console.log(error);
   }

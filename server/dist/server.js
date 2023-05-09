@@ -20,9 +20,11 @@ const helmet_1 = __importDefault(require("helmet"));
 const morgan_1 = __importDefault(require("morgan"));
 const xss_clean_1 = __importDefault(require("xss-clean"));
 const connect_1 = require("./db/connect");
-const kpi_1 = __importDefault(require("./routes/kpi"));
+const allRoutes_1 = __importDefault(require("./routes/allRoutes"));
+const allRoutes_2 = __importDefault(require("./routes/allRoutes"));
 const middleware_1 = require("./middleware/");
 const KPI_1 = __importDefault(require("./models/KPI"));
+const Product_1 = __importDefault(require("./models/Product"));
 const data_1 = require("./data/data");
 const app = (0, express_1.default)();
 const port = process.env.PORT || 9000;
@@ -34,7 +36,8 @@ app.use((0, morgan_1.default)("common"));
 app.use((0, xss_clean_1.default)());
 app.use((0, cors_1.default)());
 //routes
-app.use("/kpi", kpi_1.default);
+app.use("/kpi", allRoutes_1.default);
+app.use("/product", allRoutes_2.default);
 // error handling
 app.use(middleware_1.notFoundMiddleware);
 app.use(middleware_1.errorHandlerMiddleware);
@@ -42,8 +45,14 @@ const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield (0, connect_1.connectDB)(process.env.MONGO_URL);
         app.listen(port, () => console.log(`Server is listening on port ${port} ...`));
-        //await mongoose.connection.db.dropDatabase();
-        KPI_1.default.insertMany(data_1.kpis);
+        const countKpi = yield KPI_1.default.countDocuments();
+        if (countKpi === 0) {
+            yield KPI_1.default.insertMany(data_1.kpis);
+        }
+        const countProduct = yield Product_1.default.countDocuments();
+        if (countProduct === 0) {
+            yield Product_1.default.insertMany(data_1.products);
+        }
     }
     catch (error) {
         console.log(error);
