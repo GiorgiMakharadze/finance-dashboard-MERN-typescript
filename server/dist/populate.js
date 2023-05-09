@@ -12,18 +12,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.connectDB = void 0;
-const mongoose_1 = __importDefault(require("mongoose"));
-const connectDB = (url) => __awaiter(void 0, void 0, void 0, function* () {
-    mongoose_1.default.set("strictQuery", false);
+const promises_1 = require("fs/promises");
+require("dotenv/config");
+const path_1 = __importDefault(require("path"));
+const connect_1 = require("./db/connect");
+const KPI_1 = __importDefault(require("./models/KPI"));
+const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield mongoose_1.default.connect(url, {
-            useMongoClient: true,
-        });
-        console.log("Connected to MongoDB");
+        yield (0, connect_1.connectDB)(process.env.MONGO_URL);
+        yield KPI_1.default.deleteMany();
+        const filePath = path_1.default.join(__dirname, "data.js");
+        const jsonData = yield (0, promises_1.readFile)(filePath, "utf8");
+        const jsonProducts = JSON.parse(jsonData);
+        yield KPI_1.default.create(jsonProducts);
+        console.log("Success!!!");
+        process.exit(0);
     }
-    catch (err) {
-        console.log("Error connecting to MongoDB:", err.message);
+    catch (error) {
+        console.error("Error:", error);
+        process.exit(1);
     }
 });
-exports.connectDB = connectDB;
+start();

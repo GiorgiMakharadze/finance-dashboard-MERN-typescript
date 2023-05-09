@@ -12,18 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.connectDB = void 0;
-const mongoose_1 = __importDefault(require("mongoose"));
-const connectDB = (url) => __awaiter(void 0, void 0, void 0, function* () {
-    mongoose_1.default.set("strictQuery", false);
-    try {
-        yield mongoose_1.default.connect(url, {
-            useMongoClient: true,
-        });
-        console.log("Connected to MongoDB");
+exports.getKpi = void 0;
+const http_status_codes_1 = require("http-status-codes");
+const KPI_1 = __importDefault(require("../models/KPI"));
+const errors_1 = require("../errors");
+const getKpi = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const kpis = yield KPI_1.default.find();
+    if (!kpis) {
+        throw new errors_1.NotFoundError("Can't find data");
     }
-    catch (err) {
-        console.log("Error connecting to MongoDB:", err.message);
-    }
+    res.status(http_status_codes_1.StatusCodes.OK).json(kpis);
 });
-exports.connectDB = connectDB;
+exports.getKpi = getKpi;

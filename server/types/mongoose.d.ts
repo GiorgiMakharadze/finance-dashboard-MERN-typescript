@@ -1,5 +1,2 @@
-declare module "mongoose" {
-  const value: any;
-
-  export default value;
-}
+declare module "mongoose";
+declare module "mongoose-currency";
