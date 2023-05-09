@@ -16,7 +16,6 @@ const app = express();
 const port = process.env.PORT || 9000;
 
 //middleware & security
-
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
@@ -37,8 +36,8 @@ const start = async () => {
     app.listen(port, () =>
       console.log(`Server is listening on port ${port} ...`)
     );
-    await mongoose.connection.db.dropDatabase();
-    KPI.insrtMany(kpis);
+    //await mongoose.connection.db.dropDatabase();
+    KPI.insertMany(kpis);
   } catch (error) {
     console.log(error);
   }

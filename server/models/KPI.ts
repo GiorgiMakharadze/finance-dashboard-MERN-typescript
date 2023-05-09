@@ -8,14 +8,16 @@ const daySchema = new Schema(
   {
     date: String,
     revenue: {
-      type: mongoose.Types.Currency,
+      type: Number,
       currency: "USD",
-      get: (v: number) => v / 100,
+      set: (v: any) => parseFloat(v.replace("$", "")),
+      get: (v: any) => v.toFixed(2),
     },
     expenses: {
-      type: mongoose.Types.Currency,
+      type: Number,
       currency: "USD",
-      get: (v: number) => v / 100,
+      set: (v: any) => parseFloat(v.replace("$", "")),
+      get: (v: any) => v.toFixed(2),
     },
   },
   { toJSON: { getters: true } }
@@ -25,24 +27,28 @@ const monthSchema = new Schema(
   {
     month: String,
     revenue: {
-      type: mongoose.Types.Currency,
+      type: Number,
       currency: "USD",
-      get: (v: number) => v / 100,
+      set: (v: any) => parseFloat(v.replace("$", "")),
+      get: (v: any) => v.toFixed(2),
     },
     expenses: {
-      type: mongoose.Types.Currency,
+      type: Number,
       currency: "USD",
-      get: (v: number) => v / 100,
+      set: (v: any) => parseFloat(v.replace("$", "")),
+      get: (v: any) => v.toFixed(2),
     },
     operationalExpenses: {
-      type: mongoose.Types.Currency,
+      type: Number,
       currency: "USD",
-      get: (v: number) => v / 100,
+      set: (v: any) => parseFloat(v.replace("$", "")),
+      get: (v: any) => v.toFixed(2),
     },
     nonOperationalExpenses: {
-      type: mongoose.Types.Currency,
+      type: Number,
       currency: "USD",
-      get: (v: number) => v / 100,
+      set: (v: any) => parseFloat(v.replace("$", "")),
+      get: (v: any) => v.toFixed(2),
     },
   },
   { toJSON: { getters: true } }
@@ -51,30 +57,27 @@ const monthSchema = new Schema(
 const KPISchema = new Schema(
   {
     totalProfit: {
-      type: mongoose.Types.Currency,
+      type: Number,
       currency: "USD",
-      get: (v: number) => v / 100,
+      set: (v: any) => parseFloat(v.replace("$", "")),
+      get: (v: any) => v.toFixed(2),
     },
     totalRevenue: {
-      type: mongoose.Types.Currency,
+      type: Number,
       currency: "USD",
-      get: (v: number) => v / 100,
+      set: (v: any) => parseFloat(v.replace("$", "")),
+      get: (v: any) => v.toFixed(2),
     },
     totalExpenses: {
-      type: mongoose.Types.Currency,
+      type: Number,
       currency: "USD",
-      get: (v: number) => v / 100,
+      set: (v: any) => parseFloat(v.replace("$", "")),
+      get: (v: any) => v.toFixed(2),
     },
-    expensesByCategory: [
-      {
-        name: String,
-        value: {
-          type: mongoose.Types.Currency,
-          currency: "USD",
-          get: (v: number) => v / 100,
-        },
-      },
-    ],
+    expensesByCategory: {
+      type: Map,
+      of: Number,
+    },
     monthlyData: [monthSchema],
     dailyData: [daySchema],
   },

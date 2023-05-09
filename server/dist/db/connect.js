@@ -17,9 +17,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const connectDB = (url) => __awaiter(void 0, void 0, void 0, function* () {
     mongoose_1.default.set("strictQuery", false);
     try {
-        yield mongoose_1.default.connect(url, {
-            useMongoClient: true,
-        });
+        yield mongoose_1.default.connect(url);
         console.log("Connected to MongoDB");
     }
     catch (err) {

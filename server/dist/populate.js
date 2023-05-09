@@ -12,19 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const promises_1 = require("fs/promises");
 require("dotenv/config");
-const path_1 = __importDefault(require("path"));
 const connect_1 = require("./db/connect");
 const KPI_1 = __importDefault(require("./models/KPI"));
+const data_1 = require("./data/data");
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield (0, connect_1.connectDB)(process.env.MONGO_URL);
         yield KPI_1.default.deleteMany();
-        const filePath = path_1.default.join(__dirname, "data.js");
-        const jsonData = yield (0, promises_1.readFile)(filePath, "utf8");
-        const jsonProducts = JSON.parse(jsonData);
-        yield KPI_1.default.create(jsonProducts);
+        yield KPI_1.default.create(data_1.kpis);
         console.log("Success!!!");
         process.exit(0);
     }

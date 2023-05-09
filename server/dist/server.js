@@ -19,7 +19,6 @@ require("express-async-errors");
 const helmet_1 = __importDefault(require("helmet"));
 const morgan_1 = __importDefault(require("morgan"));
 const xss_clean_1 = __importDefault(require("xss-clean"));
-const mongoose_1 = __importDefault(require("mongoose"));
 const connect_1 = require("./db/connect");
 const kpi_1 = __importDefault(require("./routes/kpi"));
 const middleware_1 = require("./middleware/");
@@ -43,8 +42,8 @@ const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield (0, connect_1.connectDB)(process.env.MONGO_URL);
         app.listen(port, () => console.log(`Server is listening on port ${port} ...`));
-        yield mongoose_1.default.connection.db.dropDatabase();
-        KPI_1.default.insrtMany(data_1.kpis);
+        //await mongoose.connection.db.dropDatabase();
+        KPI_1.default.insertMany(data_1.kpis);
     }
     catch (error) {
         console.log(error);
