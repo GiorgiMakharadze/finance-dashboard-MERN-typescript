@@ -7,7 +7,7 @@ loadType(mongoose);
 const TransactionsSchema = new Schema(
   {
     buyer: {
-      type: Number,
+      type: String,
       currency: "USD",
       set: (v: any) => parseFloat(v.replace("$", "")),
       get: (v: any) => v.toFixed(2),
@@ -30,4 +30,4 @@ const TransactionsSchema = new Schema(
 
 const Transaction = mongoose.model("Transaction", TransactionsSchema);
 
-export default TransactionsSchema;
+export default Transaction;

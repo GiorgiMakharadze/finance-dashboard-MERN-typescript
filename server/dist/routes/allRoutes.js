@@ -6,4 +6,5 @@ const product_1 = require("../controllers/product");
 const router = (0, express_1.Router)();
 router.route("/kpis").get(kpi_1.getKpi);
 router.route("/products").get(product_1.getProduct);
+router.route("/transactions").get();
 exports.default = router;

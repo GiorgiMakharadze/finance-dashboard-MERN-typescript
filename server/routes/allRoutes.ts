@@ -6,5 +6,6 @@ const router = Router();
 
 router.route("/kpis").get(getKpi);
 router.route("/products").get(getProduct);
+router.route("/transactions").get();
 
 export default router;

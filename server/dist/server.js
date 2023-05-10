@@ -22,10 +22,12 @@ const xss_clean_1 = __importDefault(require("xss-clean"));
 const connect_1 = require("./db/connect");
 const allRoutes_1 = __importDefault(require("./routes/allRoutes"));
 const allRoutes_2 = __importDefault(require("./routes/allRoutes"));
+const allRoutes_3 = __importDefault(require("./routes/allRoutes"));
 const middleware_1 = require("./middleware/");
 const KPI_1 = __importDefault(require("./models/KPI"));
 const Product_1 = __importDefault(require("./models/Product"));
 const data_1 = require("./data/data");
+const Transactions_1 = __importDefault(require("./models/Transactions"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 9000;
 //middleware & security
@@ -38,6 +40,7 @@ app.use((0, cors_1.default)());
 //routes
 app.use("/kpi", allRoutes_1.default);
 app.use("/product", allRoutes_2.default);
+app.use("/transaction", allRoutes_3.default);
 // error handling
 app.use(middleware_1.notFoundMiddleware);
 app.use(middleware_1.errorHandlerMiddleware);
@@ -52,6 +55,10 @@ const start = () => __awaiter(void 0, void 0, void 0, function* () {
         const countProduct = yield Product_1.default.countDocuments();
         if (countProduct === 0) {
             yield Product_1.default.insertMany(data_1.products);
+        }
+        const transactionCount = yield Transactions_1.default.countDocuments();
+        if (transactionCount === 0) {
+            yield Transactions_1.default.insertMany(data_1.transactions);
         }
     }
     catch (error) {

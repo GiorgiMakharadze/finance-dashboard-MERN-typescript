@@ -9,7 +9,7 @@ const Schema = mongoose_1.default.Schema;
 (0, mongoose_currency_1.loadType)(mongoose_1.default);
 const TransactionsSchema = new Schema({
     buyer: {
-        type: Number,
+        type: String,
         currency: "USD",
         set: (v) => parseFloat(v.replace("$", "")),
         get: (v) => v.toFixed(2),
@@ -28,4 +28,4 @@ const TransactionsSchema = new Schema({
     ],
 }, { timestamps: true, toJSON: { getters: true } });
 const Transaction = mongoose_1.default.model("Transaction", TransactionsSchema);
-exports.default = TransactionsSchema;
+exports.default = Transaction;

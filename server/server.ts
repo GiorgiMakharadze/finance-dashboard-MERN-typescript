@@ -8,10 +8,12 @@ import xss from "xss-clean";
 import { connectDB } from "./db/connect";
 import kpiRoutes from "./routes/allRoutes";
 import productRoutes from "./routes/allRoutes";
+import transactionRoutes from "./routes/allRoutes";
 import { notFoundMiddleware, errorHandlerMiddleware } from "./middleware/";
 import KPI from "./models/KPI";
 import Product from "./models/Product";
-import { kpis, products } from "./data/data";
+import { kpis, products, transactions } from "./data/data";
+import Transaction from "./models/Transactions";
 
 const app = express();
 const port = process.env.PORT || 9000;
@@ -27,6 +29,7 @@ app.use(cors());
 //routes
 app.use("/kpi", kpiRoutes);
 app.use("/product", productRoutes);
+app.use("/transaction", transactionRoutes);
 
 // error handling
 app.use(notFoundMiddleware);
@@ -45,6 +48,10 @@ const start = async () => {
     const countProduct = await Product.countDocuments();
     if (countProduct === 0) {
       await Product.insertMany(products);
+    }
+    const transactionCount = await Transaction.countDocuments();
+    if (transactionCount === 0) {
+      await Transaction.insertMany(transactions);
     }
   } catch (error) {
     console.log(error);
