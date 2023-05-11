@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import {
   Tooltip,
   CartesianGrid,
@@ -58,7 +58,6 @@ const Row2 = () => {
       })
     );
   }, [productData]);
-
   return (
     <>
       <DashboardBox gridArea="d">

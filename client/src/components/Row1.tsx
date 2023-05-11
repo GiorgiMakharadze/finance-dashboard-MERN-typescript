@@ -22,7 +22,6 @@ import BoxHeader from "./BoxHeader";
 const Row1 = () => {
   const { palette }: any = useTheme();
   const { data } = useGetKpisQuery();
-  console.log(data, "data");
 
   const lastMonthData =
     data?.[0]?.monthlyData?.[data?.[0]?.monthlyData?.length - 1];

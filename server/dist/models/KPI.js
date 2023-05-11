@@ -4,9 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const mongoose_currency_1 = require("mongoose-currency");
 const Schema = mongoose_1.default.Schema;
-(0, mongoose_currency_1.loadType)(mongoose_1.default);
 const daySchema = new Schema({
     date: String,
     revenue: {

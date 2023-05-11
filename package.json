@@ -1,0 +1,20 @@
+{
+  "name": "finance-app",
+  "version": "1.0.0",
+  "description": "This application is a data visualization tool, developed with the powerful combination of React and Node.js. It provides users with an intuitive platform to analyze their financial performance indicators such as Revenue, Expenses, and Profit. Through the employment of dynamic charts and graphs, users can gain insights and track trends in their financial data.",
+  "main": "index.js",
+  "scripts": {
+    "setup-production": "npm run install-client && npm run build-client && npm run install-server",
+    "install-client": "cd client && npm install",
+    "install-server": "cd server && npm install",
+    "build-client": "cd client && npm run build",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.0.1"
+  }
+}
