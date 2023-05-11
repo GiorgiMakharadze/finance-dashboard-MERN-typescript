@@ -3,6 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import "express-async-errors";
 import helmet from "helmet";
+import path from "path";
 import morgan from "morgan";
 import xss from "xss-clean";
 import { connectDB } from "./db/connect";
@@ -17,6 +18,7 @@ import Transaction from "./models/Transactions";
 
 const app = express();
 const port = process.env.PORT || 9000;
+const __dirnames = path.resolve();
 
 //middleware & security
 app.use(express.json());
@@ -26,10 +28,16 @@ app.use(morgan("common"));
 app.use(xss());
 app.use(cors());
 
+app.use(express.static(path.resolve("../client/dist")));
+
 //routes
 app.use("/kpi", kpiRoutes);
 app.use("/product", productRoutes);
 app.use("/transaction", transactionRoutes);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirnames, "../client/dist", "index.html"));
+});
 
 // error handling
 app.use(notFoundMiddleware);
