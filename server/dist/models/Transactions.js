@@ -10,9 +10,7 @@ const Schema = mongoose_1.default.Schema;
 const TransactionsSchema = new Schema({
     buyer: {
         type: String,
-        currency: "USD",
-        set: (v) => parseFloat(v.replace("$", "")),
-        get: (v) => v.toFixed(2),
+        required: true,
     },
     amount: {
         type: Number,

@@ -8,9 +8,7 @@ const TransactionsSchema = new Schema(
   {
     buyer: {
       type: String,
-      currency: "USD",
-      set: (v: any) => parseFloat(v.replace("$", "")),
-      get: (v: any) => v.toFixed(2),
+      required: true,
     },
     amount: {
       type: Number,
