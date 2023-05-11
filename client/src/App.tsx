@@ -5,7 +5,7 @@ import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import Navbar from "@/components/NavBar";
-import Dashboard from "@/pages/Dashboard";
+import Dashboard from "./pages/Dashboard";
 
 const App = () => {
   const theme = useMemo(() => createTheme(themeSettings), []);
